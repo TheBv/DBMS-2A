@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node build/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheBv/DBMS-2A.git"
+  },
+  "author": "",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/TheBv/DBMS-2A/issues"
+  },
+  "homepage": "https://github.com/TheBv/DBMS-2A#readme",
+  "dependencies": {
+    "drizzle-orm": "^0.29.2",
+    "postgres": "^3.4.3"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.20.9",
+    "typescript": "^5.3.3"
+  }
+}
