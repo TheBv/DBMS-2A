@@ -1,0 +1,18 @@
+{
+  "name": "dbms-2a",
+  "version": "1.0.0",
+  "description": "Project that aims to create a full stack solution that allows the user to report various\r beheaviours about themselves.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "expo": "^50.0.3",
+    "react-native-web": "^0.19.10"
+  },
+  "devDependencies": {
+    "metro-config": "^0.80.5"
+  }
+}
