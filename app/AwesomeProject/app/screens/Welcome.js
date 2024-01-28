@@ -43,7 +43,7 @@ const Welcome = ({ navigation }) => {
         onPress={() => {
           navigation.navigate("Quiz");
           startQuiz();
-          mode="outlined"
+          mode="contained"
         }}
         style={styles.btn}
       >
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     // backgroundColor: "#d5bf96",
-    backgroundColor: "#fac782",
+    backgroundColor: "#f13a59",
     paddingHorizontal: 5,
     paddingVertical: 15,
     // width: "50%",
