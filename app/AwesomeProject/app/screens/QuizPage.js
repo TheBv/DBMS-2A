@@ -7,13 +7,13 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import data from "../../QuizData";
 import ProgressBar from "./ProgressBar";
 import Questions from "./Questions";
 import TapRatingScreen from "./TapRatingScreen"
+import { useQuestions } from "../hooks/useQuestions";
 
 const QuizPage = ({ navigation }) => {
-  const allQuestions = data;
+  const allQuestions = useQuestions();
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [progress, setProgress] = useState(new Animated.Value(1));
@@ -24,6 +24,8 @@ const QuizPage = ({ navigation }) => {
   const [correctOption, setCorrectOption] = useState(null);
   const [score, setScore] = useState(0);
   const [ratingValue, setRatingValue] = useState(0);
+
+  console.log("QUESTIONS", allQuestions)
 
   const restartQuiz = () => {
     setCurrentQuestionIndex(0);
@@ -140,7 +142,7 @@ const QuizPage = ({ navigation }) => {
           <ProgressBar progress={progress} />
           <Questions
             index={currentQuestionIndex}
-            question={allQuestions[currentQuestionIndex]?.question}
+            question={allQuestions[currentQuestionIndex]?.title}
           />
         </View>
         {/* {renderOptions(navigation)} */}

@@ -1,7 +1,6 @@
 
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
-import data from "../../QuizData";
 
 const Questions = ({ index, question }) => {
   return (
@@ -19,7 +18,7 @@ const Questions = ({ index, question }) => {
           {index + 1}
         </Text>
         <Text style={{ color: "#333", fontSize: 13, opacity: 0.6 }}>
-          / {data.length}
+          / X
         </Text>
       </View>
 

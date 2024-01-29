@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Animated, StyleSheet } from "react-native";
-import data from "../../QuizData"; 
+import { useQuestions } from "../hooks/useQuestions";
 
 const ProgressBar = ({ progress }) => {
 //quiz data file imported to get the total number of questions
-  const allQuestions = data;
+  const allQuestions = useQuestions();
 
   const progressAnim = progress.interpolate({
     inputRange: [0, allQuestions.length],
