@@ -17,12 +17,12 @@ To change the default database configuration values you can edit `drizzle.config
 ### Generation
 To generate new migrations after changing the schema run:
 ```sh
-npx drizzle-kit generate:pq
+npx drizzle-kit generate:pg
 ```
 ### Migrating
 To migrate/setup the database for the first time run:
 ```sh
-npx drizzle-kit push:pq
+npx drizzle-kit push:pg
 ```
 
 ## Start backend
