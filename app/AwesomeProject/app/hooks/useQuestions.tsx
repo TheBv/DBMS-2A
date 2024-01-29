@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { IQuestion, IQuestionParams, getQuestion, getQuestions } from "../lib/api";
 
 
-export const useQuestions = (params: Partial<IQuestionParams>) => {
+export const useQuestions = (params?: Partial<IQuestionParams>) => {
     const [questions, setQuestions] = useState<IQuestion[]>([]);
 
     useEffect(() => {

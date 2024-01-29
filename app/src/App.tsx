@@ -1,20 +1,40 @@
+import { ColumnDef } from "@tanstack/react-table"
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { IQuestion } from '../AwesomeProject/app/lib/api'
+import { useQuestions } from "./../AwesomeProject/app/hooks/useQuestions"
 import './App.css'
+import { DataTable } from "./components/DataTable"
+import { ThemeProvider } from "@/components/theme-provider"
+
+// TODO: Add deletion column & inspect
+export const columns: ColumnDef<IQuestion>[] = [
+  {
+    accessorKey: 'title',
+    header: 'Title',
+  },
+  {
+    accessorKey: 'description',
+    header: 'Description',
+  },
+  {
+    accessorKey: 'options',
+    header: 'Options',
+  },
+  {
+    accessorKey: 'categories',
+    header: 'Categories',
+  }
+]
 
 function App() {
   const [count, setCount] = useState(0)
-
+  const questions = useQuestions()
   return (
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <h2>Questions</h2>
+        <DataTable columns={columns} data={questions} />
       </div>
       <h1>Vite + React</h1>
       <div className="card">
@@ -29,6 +49,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
+    </ThemeProvider>
   )
 }
 
