@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/TheBv/DBMS-2A#readme",
   "dependencies": {
+    "@fastify/cors": "^9.0.0",
     "drizzle-orm": "^0.29.2",
     "express": "^4.18.2",
     "fastify": "^4.25.2",

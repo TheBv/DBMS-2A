@@ -1,12 +1,12 @@
 {
   "version": "5",
-  "dialect": "mysql",
+  "dialect": "pg",
   "entries": [
     {
       "idx": 0,
       "version": "5",
-      "when": 1704719548894,
-      "tag": "0000_quick_inertia",
+      "when": 1706534053259,
+      "tag": "0000_medical_gamma_corps",
       "breakpoints": true
     }
   ]

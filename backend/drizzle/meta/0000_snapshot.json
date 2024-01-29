@@ -1,5 +1,5 @@
 {
-  "id": "d9269837-6c6a-4a1d-a324-275dff55b199",
+  "id": "f24beb86-aee1-411e-a034-e858cdd02147",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -116,7 +116,7 @@
         },
         "timing_rule": {
           "name": "timing_rule",
-          "type": "varchar(256)",
+          "type": "timestamp",
           "primaryKey": false,
           "notNull": false
         }

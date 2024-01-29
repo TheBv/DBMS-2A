@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS "questions" (
 	"description" varchar(1024),
 	"categories" eval_category[],
 	"options" varchar(1024)[],
-	"timing_rule" varchar(256)
+	"timing_rule" timestamp
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (

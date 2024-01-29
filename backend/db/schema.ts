@@ -1,4 +1,4 @@
-import { integer, pgEnum, pgTable, serial, uniqueIndex, varchar } from 'drizzle-orm/pg-core';
+import { integer, pgEnum, pgTable, serial, timestamp, uniqueIndex, varchar } from 'drizzle-orm/pg-core';
 
 export const evalCategory = pgEnum('eval_category', ['physiology', 'psychology', 'training', 'performance', 'social', 'cognition']);
 
@@ -20,7 +20,7 @@ export const questions = pgTable('questions', {
     description: varchar('description', { length: 1024 }),
     categories: evalCategory('categories').array(),
     options: varchar('options', { length: 1024 }).array(),
-    timing_rule: varchar('timing_rule', { length: 256 }),
+    timing_rule: timestamp('timing_rule', { withTimezone: false }),
 }, (question) => {
     return {
         titleIndex: uniqueIndex('title_idx').on(question.title),
