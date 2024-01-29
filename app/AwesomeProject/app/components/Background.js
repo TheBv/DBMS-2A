@@ -5,8 +5,8 @@ import { theme } from '../core/theme'
 export default function Background({ children }) {
   return (
     <ImageBackground
-      source={require('../../assets/training_ground.png')}
-    //   resizeMode="repeat"
+      source={require('../../assets/starnight.png')}
+      //  resizeMode="repeat"
       style={styles.background}
     >
       <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     width: '100%',
+    height: '100%',
     backgroundColor: theme.colors.surface,
   },
   container: {
