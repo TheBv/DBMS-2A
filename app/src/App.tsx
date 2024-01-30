@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table"
-import { IQuestion, putQuestion } from '../AwesomeProject/app/lib/api'
+import { IQuestion, deleteQuestion, putQuestion } from '../AwesomeProject/app/lib/api'
 import { useQuestions } from "./../AwesomeProject/app/hooks/useQuestions"
 import './App.css'
 import { DataTable } from "./components/DataTable"
@@ -14,26 +14,6 @@ import * as schema from './../../backend/db/schema'
 import { Controller, useForm } from "react-hook-form"
 import { DateTimePicker } from "./components/ui/time/date-time-picker"
 
-// TODO: Add deletion column & inspect
-export const columns: ColumnDef<IQuestion>[] = [
-  {
-    accessorKey: 'title',
-    header: 'Title',
-  },
-  {
-    accessorKey: 'description',
-    header: 'Description',
-  },
-  {
-    accessorKey: 'options',
-    header: 'Options',
-  },
-  {
-    accessorKey: 'categories',
-    header: 'Categories',
-  }
-]
-
 const categories = schema.evalCategory.enumValues
 
 type Question = {
@@ -42,15 +22,43 @@ type Question = {
 
 
 function App() {
-  const questions = useQuestions()
+  const { questions, get: getQuestions } = useQuestions()
 
   const { control, register, handleSubmit, formState: { errors } } = useForm<Question>()
+
+  const columns: ColumnDef<IQuestion>[] = [
+    {
+      accessorKey: 'title',
+      header: 'Title',
+    },
+    {
+      accessorKey: 'description',
+      header: 'Description',
+    },
+    {
+      accessorKey: 'categories',
+      header: 'Categories',
+    },
+    {
+      accessorKey: 'timing_rule',
+      header: 'Timing Rule',
+    },
+    {
+      accessorKey: 'id',
+      header: '',
+      cell: ({ row }) => {
+        // Return a delete button
+        return (
+          <Button variant="outline" onClick={() => deleteQuestion(row.original.id!).then(() => getQuestions())}>Delete</Button>
+        )
+      }
+    }
+  ]
 
   const onSubmit = handleSubmit((data) => {
     putQuestion({
       ...data,
       categories: (data.categories as unknown as string)?.split(',') as Question["categories"],
-      options: (data.options as string | undefined)?.split(',')
     })
   })
   return (
@@ -100,13 +108,9 @@ function App() {
                     />
 
                   </div>
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="options">Options</Label>
-                    <Input id="options" placeholder="Comma seperated options of the question" {...register("options", { required: true })} error={errors.options?.type} />
-                  </div>
                   <div>
                     <Label htmlFor="timing">Timing</Label>
-                    <DateTimePicker control={control} name="timing_rule"/>
+                    <DateTimePicker control={control} name="timing_rule" />
                   </div>
                 </div>
               </form>
