@@ -13,7 +13,7 @@ import TapRatingScreen from "./TapRatingScreen"
 import { useQuestions } from "../hooks/useQuestions";
 
 const QuizPage = ({ navigation }) => {
-  const allQuestions = useQuestions();
+  const {questions: allQuestions} = useQuestions();
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [progress, setProgress] = useState(new Animated.Value(1));

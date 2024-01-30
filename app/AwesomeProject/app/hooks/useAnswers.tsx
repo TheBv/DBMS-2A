@@ -4,23 +4,31 @@ import { IAnswer, IAnswerParams, getAnswer, getAnswers } from "../lib/api";
 export const useAnswers = (params: Partial<IAnswerParams>) => {
     const [answers, setAnswers] = useState<IAnswer[]>([]);
 
-    useEffect(() => {
+    const get = (params: Partial<IAnswerParams>) => {
         getAnswers(params).then((answers) => {
             setAnswers(answers);
         });
+    }
+
+    useEffect(() => {
+        get(params)
     }, [params]);
 
-    return answers;
+    return {answers, get};
 }
 
 export const useAnswer = (id: number) => {
     const [answer, setAnswer] = useState<IAnswer>();
 
-    useEffect(() => {
+    const get = (id: number) => {
         getAnswer(id).then((answer) => {
             setAnswer(answer);
         });
+    }
+
+    useEffect(() => {
+        get(id)
     }, [id]);
 
-    return answer;
+    return {answer, get};
 }

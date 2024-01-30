@@ -5,23 +5,31 @@ import { IQuestion, IQuestionParams, getQuestion, getQuestions } from "../lib/ap
 export const useQuestions = (params?: Partial<IQuestionParams>) => {
     const [questions, setQuestions] = useState<IQuestion[]>([]);
 
-    useEffect(() => {
+    const get = (params?: Partial<IQuestionParams>) => {
         getQuestions(params).then((questions) => {
             setQuestions(questions);
         });
+    }
+
+    useEffect(() => {
+        get(params)
     }, [params]);
 
-    return questions;
+    return {questions, get};
 }
 
 export const useQuestion = (id: number) => {
     const [question, setQuestion] = useState<IQuestion>();
 
-    useEffect(() => {
+    const get = (id: number) => {
         getQuestion(id).then((question) => {
             setQuestion(question);
         });
+    }
+
+    useEffect(() => {
+        get(id)
     }, [id]);
 
-    return question;
+    return {question, get};
 }

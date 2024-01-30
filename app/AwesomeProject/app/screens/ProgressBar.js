@@ -4,7 +4,7 @@ import { useQuestions } from "../hooks/useQuestions";
 
 const ProgressBar = ({ progress }) => {
 //quiz data file imported to get the total number of questions
-  const allQuestions = useQuestions();
+  const {questions: allQuestions} = useQuestions();
 
   const progressAnim = progress.interpolate({
     inputRange: [0, allQuestions.length],
