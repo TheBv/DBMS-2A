@@ -13,7 +13,9 @@ export interface IQuestionParams {
     time_end: string
 }
 
-export type IQuestion = typeof schema.questions.$inferSelect
+export type IQuestion = {
+    timing_rule: string
+} & Omit<typeof schema.questions.$inferInsert, 'timing_rule'>
 
 export const getQuestions = async (params?: Partial<IQuestionParams>): Promise<IQuestion[]> => {
     const url = new URLSearchParams()
@@ -52,6 +54,17 @@ export const putQuestion = async (question: Omit<IQuestion, "id">): Promise<IPut
         headers: {
             "Content-Type": "application/json"
         }
+    }).catch((err) => {
+            console.log(err)
+        })
+    if (!result)
+        return null
+    return (await result.json()).result
+}
+
+export const deleteQuestion = async (id: number): Promise<IPutResponse> => {
+    const result = await fetch("http://localhost:3000/question/" + id, {
+        method: "DELETE"
     }).catch((err) => {
             console.log(err)
         })
@@ -108,6 +121,17 @@ export const putUser = async (user: Omit<IUser, "id">): Promise<IPutResponse> =>
     return (await result.json()).result
 }
 
+export const deleteUser = async (id: number): Promise<IPutResponse> => {
+    const result = await fetch("http://localhost:3000/user/" + id, {
+        method: "DELETE"
+    }).catch((err) => {
+            console.log(err)
+        })
+    if (!result)
+        return null
+    return (await result.json()).result
+}
+
 export interface IAnswerParams {
     user_id?: number,
     question_id?: number,
@@ -151,6 +175,17 @@ export const putAnswer = async (answer: Omit<IAnswer, "id">): Promise<IPutRespon
         headers: {
             "Content-Type": "application/json"
         }
+    }).catch((err) => {
+            console.log(err)
+        })
+    if (!result)
+        return null
+    return (await result.json()).result
+}
+
+export const deleteAnswer = async (id: number): Promise<IPutResponse> => {
+    const result = await fetch("http://localhost:3000/answer/" + id, {
+        method: "DELETE"
     }).catch((err) => {
             console.log(err)
         })
