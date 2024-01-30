@@ -19,7 +19,6 @@ export const questions = pgTable('questions', {
     title: varchar('title', { length: 256 }),
     description: varchar('description', { length: 1024 }),
     categories: evalCategory('categories').array(),
-    options: varchar('options', { length: 1024 }).array(),
     timing_rule: timestamp('timing_rule', { withTimezone: false }),
 }, (question) => {
     return {

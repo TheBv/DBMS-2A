@@ -76,7 +76,6 @@ fastify.get<{ Querystring: IQuestionParams }>('/questions', (req, res) => {
         where:
             (question, { and, lte, gte }) =>
                 and(query.categories ? arrayContains(question.categories, query.categories) : undefined,
-                    query.options ? arrayContains(question.options, query.options) : undefined,
                     query.time_start ? gte(question.timing_rule, new Date(query.time_start)) : undefined,
                     query.time_end ? lte(question.timing_rule, new Date(query.time_end)) : undefined),
         orderBy: schema.questions.timing_rule
@@ -96,7 +95,6 @@ fastify.put<{ Body: IQuestionBody }>('/questions', (req, res) => {
         title: req.body.title,
         description: req.body.description,
         categories: req.body.categories,
-        options: req.body.options,
         timing_rule: new Date(req.body.timing_rule)
     }).returning({ id: schema.questions.id }).execute().then((result) => {
         res.send(wrapResult(result))
