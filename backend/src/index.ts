@@ -36,7 +36,6 @@ fastify.get<{ Querystring: IUserParams }>('/users', (req, res) => {
     })
 })
 
-
 fastify.put<{ Body: typeof schema.users.$inferInsert }>('/users', (req, res) => {
     db.insert(schema.users).values({
         name: req.body.name,
@@ -62,7 +61,7 @@ fastify.delete<{ Params: RouteParameters<'/users/:id'> }>('/users/:id', (req, re
     }).catch((err) => {
         res.status(500).send(err)
     })
-}) 
+})
 
 interface IQuestionParams {
     options: string[],
@@ -79,7 +78,8 @@ fastify.get<{ Querystring: IQuestionParams }>('/questions', (req, res) => {
                 and(query.categories ? arrayContains(question.categories, query.categories) : undefined,
                     query.options ? arrayContains(question.options, query.options) : undefined,
                     query.time_start ? gte(question.timing_rule, new Date(query.time_start)) : undefined,
-                    query.time_end ? lte(question.timing_rule, new Date(query.time_end)) : undefined)
+                    query.time_end ? lte(question.timing_rule, new Date(query.time_end)) : undefined),
+        orderBy: schema.questions.timing_rule
     }).then((result) => {
         res.send(wrapResult(result))
     }).catch((err) => {
