@@ -63,7 +63,7 @@ export const putQuestion = async (question: Omit<IQuestion, "id">): Promise<IPut
 }
 
 export const deleteQuestion = async (id: number): Promise<IPutResponse> => {
-    const result = await fetch("http://localhost:3000/question/" + id, {
+    const result = await fetch("http://localhost:3000/questions/" + id, {
         method: "DELETE"
     }).catch((err) => {
             console.log(err)
@@ -122,7 +122,7 @@ export const putUser = async (user: Omit<IUser, "id">): Promise<IPutResponse> =>
 }
 
 export const deleteUser = async (id: number): Promise<IPutResponse> => {
-    const result = await fetch("http://localhost:3000/user/" + id, {
+    const result = await fetch("http://localhost:3000/users/" + id, {
         method: "DELETE"
     }).catch((err) => {
             console.log(err)
@@ -184,7 +184,7 @@ export const putAnswer = async (answer: Omit<IAnswer, "id">): Promise<IPutRespon
 }
 
 export const deleteAnswer = async (id: number): Promise<IPutResponse> => {
-    const result = await fetch("http://localhost:3000/answer/" + id, {
+    const result = await fetch("http://localhost:3000/answers/" + id, {
         method: "DELETE"
     }).catch((err) => {
             console.log(err)
