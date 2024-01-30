@@ -64,7 +64,6 @@ fastify.delete<{ Params: RouteParameters<'/users/:id'> }>('/users/:id', (req, re
 })
 
 interface IQuestionParams {
-    options: string[],
     categories: typeof schema.evalCategory.enumValues,
     time_start: string,
     time_end: string
@@ -169,36 +168,9 @@ fastify.delete<{ Params: RouteParameters<'/answers/:id'> }>('/answers/:id', (req
     })
 })
 
-
-
-/*
-    Routes:
-        * /users
-        * /users/:id
-        * /questions
-        * /questions/:id
-        * /answers
-        * /answers/:id
-    Params:
-    - users:
-        * name
-        * categories
-    - questions:
-        * timing_rule (how do we do that? Ideally start end date)
-        * options
-        * categories
-    - answers:
-        * user_id
-        * question_id
-        * timestamp (start and end date)
-        * 
-*/
-
 async function start() {
     try {
-        await fastify.register(cors, {
-            // put your options here
-        })
+        await fastify.register(cors)
         await fastify.listen({ port: 3000 })
     } catch (err) {
         fastify.log.error(err)
