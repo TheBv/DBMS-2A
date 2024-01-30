@@ -3,7 +3,7 @@ import postgres from 'postgres';
 import * as schema from './../db/schema';
 import Fastify from 'fastify';
 import { RouteParameters } from 'express-serve-static-core';
-import { arrayContains, arrayOverlaps } from 'drizzle-orm';
+import { arrayContains, arrayOverlaps, eq } from 'drizzle-orm';
 import cors from '@fastify/cors';
 const fastify = Fastify();
 
@@ -56,6 +56,14 @@ fastify.get<{ Params: RouteParameters<'/users/:id'> }>('/users/:id', (req, res) 
     })
 })
 
+fastify.delete<{ Params: RouteParameters<'/users/:id'> }>('/users/:id', (req, res) => {
+    db.delete(schema.users).where(eq(schema.users.id, Number(req.params.id))).then((result) => {
+        res.send(wrapResult(result))
+    }).catch((err) => {
+        res.status(500).send(err)
+    })
+}) 
+
 interface IQuestionParams {
     options: string[],
     categories: typeof schema.evalCategory.enumValues,
@@ -105,6 +113,13 @@ fastify.get<{ Params: RouteParameters<'/questions/:id'> }>('/questions/:id', (re
     })
 })
 
+fastify.delete<{ Params: RouteParameters<'/questions/:id'> }>('/questions/:id', (req, res) => {
+    db.delete(schema.questions).where(eq(schema.questions.id, Number(req.params.id))).then((result) => {
+        res.send(wrapResult(result))
+    }).catch((err) => {
+        res.status(500).send(err)
+    })
+})
 
 interface IAnswerParams {
     user_id: number,
@@ -148,6 +163,14 @@ fastify.get<{ Params: RouteParameters<'/answers/:id'> }>('/answers/:id', (req, r
     })
 })
 
+fastify.delete<{ Params: RouteParameters<'/answers/:id'> }>('/answers/:id', (req, res) => {
+    db.delete(schema.answers).where(eq(schema.answers.id, Number(req.params.id))).then((result) => {
+        res.send(wrapResult(result))
+    }).catch((err) => {
+        res.status(500).send(err)
+    })
+})
+
 
 
 /*
@@ -175,9 +198,9 @@ fastify.get<{ Params: RouteParameters<'/answers/:id'> }>('/answers/:id', (req, r
 
 async function start() {
     try {
-        await fastify.register(cors, { 
+        await fastify.register(cors, {
             // put your options here
-          })
+        })
         await fastify.listen({ port: 3000 })
     } catch (err) {
         fastify.log.error(err)
