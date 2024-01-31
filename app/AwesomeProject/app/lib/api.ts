@@ -121,6 +121,21 @@ export const putUser = async (user: Omit<IUser, "id">): Promise<IPutResponse> =>
     return (await result.json()).result
 }
 
+export const patchUser = async (id: number, user: Partial<Omit<IUser, "id">>): Promise<IPutResponse> => {
+    const result = await fetch("http://localhost:3000/users/" + id, {
+        method: "PATCH",
+        body: JSON.stringify(user),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).catch((err) => {
+            console.log(err)
+        })
+    if (!result)
+        return null
+    return (await result.json()).result
+}
+
 export const deleteUser = async (id: number): Promise<IPutResponse> => {
     const result = await fetch("http://localhost:3000/users/" + id, {
         method: "DELETE"
