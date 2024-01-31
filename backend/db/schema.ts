@@ -7,10 +7,10 @@ export const sportCategory = pgEnum('sport_category', ['soccer', 'basketball', '
 export const users = pgTable('users', {
     id: serial('id').primaryKey(),
     name: varchar('name', { length: 256 }),
-    email: varchar('email', { length: 256 }),
+    email: varchar('email', { length: 256 }).unique(),
     password: varchar('password', { length: 256 }),
     categories: sportCategory('categories').array(),
-    token: varchar('token', { length: 32 }),
+    token: varchar('token', { length: 32 }).unique(),
   }, (users) => {
     return {
       nameIndex: uniqueIndex('name_idx').on(users.name),
@@ -35,7 +35,7 @@ export const answers = pgTable('answers', {
     user_id: integer('user_id').notNull().references(() => users.id),
     question_id: integer('question_id').notNull().references(() => questions.id),
     answer: varchar('answer', { length: 1024 }),
-    timestamp: integer('timestamp')
+    timestamp: timestamp('timestamp', { withTimezone: false })
 }, (answer) => {
     return {
         userQuestionIndex: uniqueIndex('user_question_idx').on(answer.user_id, answer.question_id),

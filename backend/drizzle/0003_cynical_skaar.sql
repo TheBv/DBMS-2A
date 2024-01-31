@@ -1,1 +1,0 @@
-ALTER TABLE "questions" ADD COLUMN "sport_category" sport_category[];

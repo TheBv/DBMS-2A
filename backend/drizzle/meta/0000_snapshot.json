@@ -1,5 +1,5 @@
 {
-  "id": "f24beb86-aee1-411e-a034-e858cdd02147",
+  "id": "2d231fb9-cbcd-487a-beef-ef287f70a74a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -34,7 +34,7 @@
         },
         "timestamp": {
           "name": "timestamp",
-          "type": "integer",
+          "type": "timestamp",
           "primaryKey": false,
           "notNull": false
         }
@@ -108,9 +108,9 @@
           "primaryKey": false,
           "notNull": false
         },
-        "options": {
-          "name": "options",
-          "type": "varchar(1024)[]",
+        "sport_category": {
+          "name": "sport_category",
+          "type": "sport_category[]",
           "primaryKey": false,
           "notNull": false
         },
@@ -150,9 +150,27 @@
           "primaryKey": false,
           "notNull": false
         },
+        "email": {
+          "name": "email",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
         "categories": {
           "name": "categories",
           "type": "sport_category[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "token": {
+          "name": "token",
+          "type": "varchar(32)",
           "primaryKey": false,
           "notNull": false
         }
@@ -168,7 +186,22 @@
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        },
+        "users_token_unique": {
+          "name": "users_token_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "token"
+          ]
+        }
+      }
     }
   },
   "enums": {

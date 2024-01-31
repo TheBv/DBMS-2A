@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS "answers" (
 	"user_id" integer NOT NULL,
 	"question_id" integer NOT NULL,
 	"answer" varchar(1024),
-	"timestamp" integer
+	"timestamp" timestamp
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "questions" (
@@ -23,14 +23,19 @@ CREATE TABLE IF NOT EXISTS "questions" (
 	"title" varchar(256),
 	"description" varchar(1024),
 	"categories" eval_category[],
-	"options" varchar(1024)[],
+	"sport_category" sport_category[],
 	"timing_rule" timestamp
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar(256),
-	"categories" sport_category[]
+	"email" varchar(256),
+	"password" varchar(256),
+	"categories" sport_category[],
+	"token" varchar(32),
+	CONSTRAINT "users_email_unique" UNIQUE("email"),
+	CONSTRAINT "users_token_unique" UNIQUE("token")
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX IF NOT EXISTS "user_question_idx" ON "answers" ("user_id","question_id");--> statement-breakpoint

@@ -22,7 +22,7 @@ export function scheduleJobs() {
                 })
             }
         }
-        console.log("Scheduled jobs", scheduledJobs)
+        console.log("Scheduled jobs", Object.keys(scheduledJobs))
     }).catch((err) => {
         console.log(err)
     })

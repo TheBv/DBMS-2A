@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1706534053259,
-      "tag": "0000_medical_gamma_corps",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1706634062020,
-      "tag": "0001_busy_human_cannonball",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1706704533501,
-      "tag": "0002_curved_sprite",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1706729911251,
-      "tag": "0003_cynical_skaar",
+      "when": 1706736986496,
+      "tag": "0000_steep_star_brand",
       "breakpoints": true
     }
   ]

@@ -169,7 +169,7 @@ fastify.get<{ Querystring: IAnswerParams }>('/answers', (req, res) => {
             (answer, { and, eq }) =>
                 and(query.user_id ? eq(answer.user_id, query.user_id) : undefined,
                     query.question_id ? eq(answer.question_id, query.question_id) : undefined,
-                    query.timestamp ? eq(answer.timestamp, query.timestamp) : undefined)
+                    query.timestamp ? eq(answer.timestamp, new Date(query.timestamp)) : undefined)
     }).then((result) => {
         res.send(wrapResult(result))
     }).catch((err) => {
@@ -177,12 +177,17 @@ fastify.get<{ Querystring: IAnswerParams }>('/answers', (req, res) => {
     })
 })
 
-fastify.put<{ Body: typeof schema.answers.$inferInsert }>('/answers', (req, res) => {
+
+type IAnswerBody = {
+    timestamp: number
+} & Omit<typeof schema.answers.$inferInsert, 'timestamp'>
+
+fastify.put<{ Body: IAnswerBody }>('/answers', (req, res) => {
     db.insert(schema.answers).values({
         user_id: req.body.user_id,
         question_id: req.body.question_id,
         answer: req.body.answer,
-        timestamp: req.body.timestamp
+        timestamp: new Date(req.body.timestamp)
     }).returning({ id: schema.answers.id }).execute().then((result) => {
         res.send(wrapResult(result))
     }).catch((err) => {
@@ -218,6 +223,7 @@ fastify.post<{ Params: RouteParameters<'/questions/:id'> }>('/postPushQuestion/:
                         title: result.title!,
                         body: result.description!,
                         data: { question_id: result.id },
+                        categoryId: "question"
                     }]).then((response) => {
                         res.status(200).send(response)
                     })
@@ -245,6 +251,7 @@ export function sendPushNotification(question: typeof schema.questions.$inferSel
                     title: question.title!,
                     body: question.description!,
                     data: { question_id: question.id },
+                    categoryId: "question"
                 }])
             }
         }).catch((err) => {
