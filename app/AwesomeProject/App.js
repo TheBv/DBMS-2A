@@ -5,9 +5,10 @@ import Welcome from './app/screens/Welcome';
 import QuizPage from './app/screens/QuizPage';
 import Result from './app/screens/Result';
 import TapRatingScreen from './app/screens/TapRatingScreen';
-import PushController from './app/screens/PushController';
-import PushNotification from './app/screens/PushNotification'; // Import your component that sends the notification
-
+import StartScreen from './app/login/StartScreen';
+import LoginScreen from './app/login/LoginScreen';
+import RegisterScreen from './app/login/RegisterScreen';
+import ResetPasswordScreen from './app/login/ResetPasswordScreen';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -54,8 +55,6 @@ export default function App() {
         />
         <Stack.Screen name="TapRating" component={TapRatingScreen} />
       </Stack.Navigator>
-      <PushController />
-      <PushNotification /> {/* Call your component to send the notification */}
     </NavigationContainer>
   );
 }

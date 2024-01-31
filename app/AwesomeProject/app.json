@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "AwesomeProject",
-    "slug": "AwesomeProject",
+    "slug": "dbms",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -30,8 +30,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "77f1b11e-a7df-4730-9508-0d8cab613354"
+        "projectId": "bebcd6fa-65ce-4c00-8d0d-797636b2aa49"
       }
-    }
+    },
+    "owner": "thebv"
   }
 }

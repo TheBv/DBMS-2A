@@ -75,7 +75,7 @@ export const deleteQuestion = async (id: number): Promise<IPutResponse> => {
 
 export interface IUserParams {
     name?: string,
-    categories?: typeof schema.sportCategory.enumValues
+    categories?: typeof schema.sportCategory.enumValues,
 }
 
 export type IUser = typeof schema.users.$inferSelect

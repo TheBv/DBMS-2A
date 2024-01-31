@@ -1,7 +1,10 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
+import { useQuestions } from "../hooks/useQuestions";
 
 const Questions = ({ index, question }) => {
+  const { questions} = useQuestions()
+
   return (
     <View style={{}}>
       {/* Question Counter */}
@@ -17,7 +20,7 @@ const Questions = ({ index, question }) => {
           {index + 1}
         </Text>
         <Text style={{ color: "#333", fontSize: 13, opacity: 0.6 }}>
-          / X
+          / {questions.length}
         </Text>
       </View>
 
