@@ -1,12 +1,11 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import React from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Welcome from "./app/screens/Welcome";
 import QuizPage from "./app/screens/QuizPage";
 import Result from "./app/screens/Result";
 import TapRatingScreen from './app/screens/TapRatingScreen';
-// import theme from './app/core';
+import PushController from './app/screens/PushController';
 import {
   StartScreen,
   LoginScreen,
@@ -14,24 +13,22 @@ import {
   ResetPasswordScreen,
   Dashboard,
 } from './app/login'
+import PushNotification from './app/screens/PushNotification'; // Import your component that sends the notification
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      {/* <Stack.Navigator initialRouteName="Welcome"
-      > */}
       <Stack.Navigator
-          initialRouteName="StartScreen"
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
+        initialRouteName="StartScreen"
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
         <Stack.Screen name="StartScreen" component={StartScreen} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
         <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-        {/* <Stack.Screen name="Dashboard" component={Dashboard} /> */}
         <Stack.Screen
           name="Homepage"
           component={Welcome}
@@ -55,7 +52,6 @@ export default function App() {
           name="ResetPasswordScreen"
           component={ResetPasswordScreen}
         />
-        
         <Stack.Screen
           name="Result"
           component={Result}
@@ -65,9 +61,8 @@ export default function App() {
         />
         <Stack.Screen name="TapRating" component={TapRatingScreen} />
       </Stack.Navigator>
-
-      
-
+      <PushController />
+      <PushNotification /> {/* Call your component to send the notification */}
     </NavigationContainer>
   );
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "540488370682",
+    "project_id": "dbms-2b",
+    "storage_bucket": "dbms-2b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540488370682:android:2c5d7966ae6a03ef287c43",
+        "android_client_info": {
+          "package_name": "react.magicbell.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2PJCz_rjnFlgqmftZFwfZ0FTU9xhhLNI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
