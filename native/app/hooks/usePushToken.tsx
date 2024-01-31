@@ -16,6 +16,31 @@ export const usePushToken = () => {
       shouldSetBadge: false,
     }),
   });
+
+  Notifications.setNotificationCategoryAsync('example', [
+    {
+      identifier: 'one',
+      buttonTitle: 'Button One',
+      options: {
+        isDestructive: true,
+        isAuthenticationRequired: false
+      }
+    },
+    {
+      identifier: 'two',
+      buttonTitle: 'Button Two',
+      options: {
+        isDestructive: true,
+        isAuthenticationRequired: true
+      }
+    },
+    {
+      identifier: 'three',
+      buttonTitle: 'Three',
+      textInput: { submitButtonTitle: 'Three', placeholder: 'Type Something' },
+    },
+  ])
+
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
 
@@ -26,6 +51,7 @@ export const usePushToken = () => {
         title: "You've got mail! 📬",
         body: 'Here is the notification body',
         data: { data: 'goes here' },
+        categoryIdentifier: 'example'
       },
       trigger: { seconds: 2 },
     });
@@ -65,20 +91,23 @@ export const usePushToken = () => {
   }
 
   useEffect(() => {
-    // If there is already the token in the app state - no need to re fetch it
-    if (token) return;
-
-    registerForPushNotificationsAsync().then((token) => {
-      setToken(token);
-    });
-
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       console.log(notification);
       setNotification(notification);
     });
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      // Button pressed
       console.log(response);
+    });
+  }, []);
+
+  useEffect(() => {
+    // If there is already the token in the app state - no need to re fetch it
+    if (token) return;
+
+    registerForPushNotificationsAsync().then((token) => {
+      setToken(token);
     });
 
     return () => {

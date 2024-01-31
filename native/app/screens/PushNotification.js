@@ -8,7 +8,7 @@ import { usePushToken } from '../hooks/usePushToken'
 const PushNotification = () => {
   const { notification, token, schedulePushNotification } = usePushToken()
   //console.log(token)
-  //console.log(notification)
+  console.log("NOTIFICATION", notification)
   return (
     <View
       style={{
