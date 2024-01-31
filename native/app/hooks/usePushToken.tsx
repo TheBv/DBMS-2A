@@ -40,6 +40,16 @@ export const usePushToken = () => {
         buttonTitle: 'Three',
         textInput: { submitButtonTitle: 'Three', placeholder: 'Type Something' },
       },
+      {
+        identifier: 'four',
+        buttonTitle: 'Four',
+        textInput: { submitButtonTitle: 'Four', placeholder: 'Type Something' },
+      },
+      {
+        identifier: 'five',
+        buttonTitle: 'Five',
+        textInput: { submitButtonTitle: 'Five', placeholder: 'Type Something' },
+      },
     ])
   }
   const notificationListener = useRef<Notifications.Subscription>();
