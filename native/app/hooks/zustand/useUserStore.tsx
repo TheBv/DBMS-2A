@@ -7,8 +7,8 @@ export interface IUserStore {
     user: IUser | null;
     token: ExpoPushToken | null;
     setToken: (token: ExpoPushToken | null) => void;
-    setUser: (user: IUser | null) => void;
-    getUser: (id: number) => void;
+    setUser: (user: IUser | null) => Promise<void>;
+    getUser: (id: number) => Promise<IUser>;
 }
 
 export const useUserStore = create<IUserStore>((set, get) => ({
@@ -24,13 +24,13 @@ export const useUserStore = create<IUserStore>((set, get) => ({
         if (value !== null) {
             const user = JSON.parse(value) as IUser | null
             if (user && user.id == id) {
-                get().setUser(user)
-                return
+                await get().setUser(user)
+                return user
             }
         }
         // If the stored user is different from the one requested, fetch it from the API
         const user = await getUser(id)
         get().setUser(user)
-        
+        return user
     }
 }));

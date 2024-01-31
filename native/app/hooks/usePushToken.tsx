@@ -4,9 +4,11 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 import { useUserStore } from './zustand/useUserStore';
+import { getUsers, putAnswer } from '../lib/api';
+import { getInnerToken } from '../lib/util';
 
 export const usePushToken = () => {
-  const { token, setToken } = useUserStore();
+  const { user, token, setToken, getUser } = useUserStore();
   const [notification, setNotification] = useState<Notifications.Notification | undefined>();
 
   if (Platform.OS != 'web') {
@@ -18,28 +20,47 @@ export const usePushToken = () => {
       }),
     });
 
-    Notifications.setNotificationCategoryAsync('example', [
+    Notifications.setNotificationCategoryAsync('question', [
       {
-        identifier: 'one',
-        buttonTitle: 'Button One',
+        identifier: '1',
+        buttonTitle: '1',
         options: {
           isDestructive: true,
           isAuthenticationRequired: false
         }
       },
       {
-        identifier: 'two',
-        buttonTitle: 'Button Two',
+        identifier: '2',
+        buttonTitle: '2',
         options: {
           isDestructive: true,
           isAuthenticationRequired: true
         }
       },
       {
-        identifier: 'three',
-        buttonTitle: 'Three',
-        textInput: { submitButtonTitle: 'Three', placeholder: 'Type Something' },
+        identifier: '3',
+        buttonTitle: '3',
+        options: {
+          isDestructive: true,
+          isAuthenticationRequired: true
+        }
       },
+      {
+        identifier: '4',
+        buttonTitle: '4',
+        options: {
+          isDestructive: true,
+          isAuthenticationRequired: true
+        }
+      },
+      {
+        identifier: '5',
+        buttonTitle: '5',
+        options: {
+          isDestructive: true,
+          isAuthenticationRequired: true
+        }
+      }
     ])
   }
   const notificationListener = useRef<Notifications.Subscription>();
@@ -52,7 +73,7 @@ export const usePushToken = () => {
         title: "You've got mail! 📬",
         body: 'Here is the notification body',
         data: { data: 'goes here' },
-        categoryIdentifier: 'example'
+        categoryIdentifier: 'question'
       },
       trigger: { seconds: 2 },
     });
@@ -83,7 +104,6 @@ export const usePushToken = () => {
       // Learn more about projectId:
       // https://docs.expo.dev/push-notifications/push-notifications-setup/#configure-projectid
       token = (await Notifications.getExpoPushTokenAsync({ projectId: Constants.expoConfig.extra.eas.projectId })).data;
-      console.log(token);
     } else {
       alert('Must use physical device for Push Notifications');
     }
@@ -92,14 +112,24 @@ export const usePushToken = () => {
   }
 
   useEffect(() => {
+    // Ideally we would only register them once but oh well
+    if (notificationListener.current) Notifications.removeNotificationSubscription(notificationListener.current)
+    //Notifications.removeNotificationSubscription(notificationListener.current)
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      console.log(notification);
       setNotification(notification);
     });
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(notificationResponse => {
+      // FIXME: This can be done way better
+      getUsers({ token: getInnerToken(token) }).then((users) => {
+        if (users.length != 0)
+          getUser(users[0].id).then((user) => {
+            putAnswer({ user_id: user.id, question_id: notificationResponse.notification.request.content.data.question_id, answer: notificationResponse.actionIdentifier, timestamp: new Date().getTime() }).then((response) => {
+              Notifications.dismissNotificationAsync(notificationResponse.notification.request.identifier)
+            })
+          })
+      })
+      // Close notification
 
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      // Button pressed
-      console.log(response);
     });
   }, []);
 

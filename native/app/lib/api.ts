@@ -1,4 +1,5 @@
 import Constants from 'expo-constants'
+//TODO:  This is fine because we're only accessing the types otherwise this'd be a big no no; ideally we'd export this a library but time is scarce
 import * as schema from './../../../backend/db/schema'
 
 export const URL = typeof Constants.expoConfig.hostUri != 'undefined' ? 
@@ -81,6 +82,7 @@ export const deleteQuestion = async (id: number): Promise<IPutResponse> => {
 export interface IUserParams {
     name?: string,
     categories?: typeof schema.sportCategory.enumValues,
+    token: string
 }
 
 export type IUser = typeof schema.users.$inferSelect
@@ -91,7 +93,8 @@ export const getUsers = async (params?: Partial<IUserParams>): Promise<IUser[]> 
         url.append("name", params.name)
     if (params?.categories)
         url.append("categories", params.categories.join(","))
-
+    if (params?.token)
+        url.append("token", params.token)
     const result = await fetch(`${URL}/users?` + url.toString())
         .catch((err) => {
             console.log(err)
@@ -189,7 +192,11 @@ export const getAnswer = async (id: number): Promise<IAnswer> => {
     return (await result.json()).result
 }
 
-export const putAnswer = async (answer: Omit<IAnswer, "id">): Promise<IPutResponse> => {
+type IAnswerBody = {
+    timestamp: number
+} & Omit<typeof schema.answers.$inferInsert, 'timestamp'>
+
+export const putAnswer = async (answer: Omit<IAnswerBody, "id">): Promise<IPutResponse> => {
     const result = await fetch(`${URL}/answers`, {
         method: "PUT",
         body: JSON.stringify(answer),

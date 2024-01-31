@@ -8,10 +8,14 @@ import {
   Animated,
 } from "react-native";
 import Button from '../components/Button'
+import { useUserStore } from "../hooks/zustand/useUserStore";
 
 const Welcome = ({ navigation }) => {
   const [fadeAnim, setFadeAnim] = useState(new Animated.Value(1));
   const [progress, setProgress] = useState(new Animated.Value(0));
+
+  const { setUser } = useUserStore()
+
   const startQuiz = () => {
 
     Animated.sequence([
@@ -43,7 +47,7 @@ const Welcome = ({ navigation }) => {
         onPress={() => {
           navigation.navigate("Quiz");
           startQuiz();
-          mode="contained"
+          mode = "contained"
         }}
         style={styles.btn}
       >
@@ -51,17 +55,18 @@ const Welcome = ({ navigation }) => {
       </TouchableOpacity>
       <Button
         mode="outlined"
-        onPress={() =>
+        onPress={() => {
+          setUser(null)
           navigation.reset({
             index: 0,
             routes: [{ name: 'StartScreen' }],
           })
-        }
+        }}
       >
         Logout
       </Button>
     </View>
-    
+
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import Background from '../components/Background'
@@ -10,10 +10,17 @@ import BackButton from '../components/BackButton'
 import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
+import { usePushToken } from '../hooks/usePushToken'
+import { getUsers } from '../lib/api'
+import { getInnerToken } from '../lib/util'
+import { useUserStore } from '../hooks/zustand/useUserStore'
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
+
+  const {user, getUser} = useUserStore();
+  const {token} = usePushToken()
 
   const onLoginPressed = () => {
     const emailError = emailValidator(email.value)
@@ -28,6 +35,24 @@ export default function LoginScreen({ navigation }) {
       routes: [{ name: 'Homepage' }],
     })
   }
+
+  useEffect(()=> {
+    if (!user)
+      return
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Homepage' }],
+    })
+  },[user])
+
+  useEffect(()=> {
+    getUsers({token: getInnerToken(token)}).then((users)=> {
+      if (users.length != 0)
+        getUser(users[0].id)
+    })
+  },[token])
+  if (token)
+
 
   return (
     <Background>

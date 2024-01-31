@@ -4,15 +4,13 @@ import Logo from '../components/Logo'
 import Header from '../components/Header'
 import Button from '../components/Button'
 import Paragraph from '../components/Paragraph'
-import PushNotification from './../screens/PushNotification'
-import { useUserStore } from '../hooks/zustand/useUserStore'
+import { usePushToken } from '../hooks/usePushToken'
 
 export default function StartScreen({ navigation }) {
-  const { user, getUser} = useUserStore();
-  console.log("USER",user)
+  const {registerForPushNotificationsAsync} = usePushToken()
   useEffect(()=> {
-    getUser(1)
-  },[])
+    registerForPushNotificationsAsync()
+  },)
   return (
     <Background>
       <Logo />
@@ -33,7 +31,6 @@ export default function StartScreen({ navigation }) {
       >
         Sign Up
       </Button>
-      <PushNotification />
     </Background>
   )
 }

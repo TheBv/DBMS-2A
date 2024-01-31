@@ -25,8 +25,6 @@ const QuizPage = ({ navigation }) => {
   const [score, setScore] = useState(0);
   const [ratingValue, setRatingValue] = useState(0);
 
-  console.log("QUESTIONS", allQuestions)
-
   const restartQuiz = () => {
     setCurrentQuestionIndex(0);
     setScore(0);
