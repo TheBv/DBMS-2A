@@ -9,12 +9,12 @@ import { Input } from "@/components/ui/input"
 import * as schema from './../../../backend/db/schema'
 import { useForm } from "react-hook-form"
 import { DateTimePicker } from "@/components/ui/time/date-time-picker"
-import { IQuestion, deleteQuestion, putQuestion } from "@/lib/api"
+import { IQuestion, deleteQuestion, postPushQuestion, putQuestion } from "@/lib/api"
 import { useQuestions } from "@/hooks/useQuestions"
 import { MultiSelect } from "@/components/ui/multi-select"
 
 const categories = schema.evalCategory.enumValues
-
+const sportCategories = schema.sportCategory.enumValues
 
 export default function Dashboard() {
   const { questions, get: getQuestions } = useQuestions()
@@ -35,6 +35,10 @@ export default function Dashboard() {
       header: 'Categories',
     },
     {
+      accessorKey: 'sport_categories',
+      header: 'Sport Categories',
+    },
+    {
       accessorKey: 'timing_rule',
       header: 'Timing Rule',
     },
@@ -44,7 +48,10 @@ export default function Dashboard() {
       cell: ({ row }) => {
         // Return a delete button
         return (
-          <Button variant="outline" onClick={() => deleteQuestion(row.original.id!).then(() => getQuestions())}>Delete</Button>
+          <div>
+           <Button variant="outline" onClick={() => postPushQuestion(row.original.id!)}>Send Push notifications</Button>
+           <Button className="border-red-600" variant="outline" onClick={() => deleteQuestion(row.original.id!).then(() => getQuestions())}>Delete</Button>
+          </div>
         )
       }
     }
@@ -55,7 +62,7 @@ export default function Dashboard() {
       getQuestions()
     )
   })
-  
+
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <>
@@ -83,7 +90,10 @@ export default function Dashboard() {
                   <div className="flex flex-col space-y-1.5">
                     <Label htmlFor="categories">Categories</Label>
                     <MultiSelect control={control} name="categories" options={categories.map((category) => ({ value: category, label: category }))} />
-
+                  </div>
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="categories">Sport Categories</Label>
+                    <MultiSelect control={control} name="sport_categories" options={sportCategories.map((category) => ({ value: category, label: category }))} />
                   </div>
                   <div>
                     <Label htmlFor="timing">Timing</Label>

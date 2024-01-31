@@ -74,3 +74,14 @@ export const deleteQuestion = async (id: number): Promise<IPutResponse> => {
         return null
     return (await result.json()).result
 }
+
+export const postPushQuestion = async (id: number): Promise<IPutResponse> => {
+    const result = await fetch(`${URL}/postPushQuestion/` + id, {
+        method: "POST"
+    }).catch((err) => {
+        console.log(err)
+    })
+    if (!result)
+        return null
+    return (await result.json()).result
+}

@@ -32,3 +32,7 @@ To run the backend simply run
 npm run start
 ```
 this command will build the typescript project and start run a node.js instance
+
+## IMPORTANT
+This backend currently doesn't have any sort of authentication built in.
+ANYONE can DELETE/CREATE/POST ANYTHING
