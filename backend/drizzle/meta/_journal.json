@@ -22,6 +22,13 @@
       "when": 1706704533501,
       "tag": "0002_curved_sprite",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1706729911251,
+      "tag": "0003_cynical_skaar",
+      "breakpoints": true
     }
   ]
 }
