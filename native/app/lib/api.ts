@@ -1,7 +1,9 @@
 import Constants from 'expo-constants'
 import * as schema from './../../../backend/db/schema'
 
-export const URL = "http://" + Constants.expoConfig.hostUri ?  Constants.expoConfig.hostUri.split(":").shift().concat(":3000") : "localhost:3000"
+export const URL = typeof Constants.expoConfig.hostUri != 'undefined' ? 
+    `http://${Constants.expoConfig.hostUri?.split(":").shift().concat(":3000")}` :
+     "http://localhost:3000"
 
 export interface IPutResponse {
     result: [{

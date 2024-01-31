@@ -9,38 +9,39 @@ export const usePushToken = () => {
   const { token, setToken } = useUserStore();
   const [notification, setNotification] = useState<Notifications.Notification | undefined>();
 
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: true,
-      shouldSetBadge: false,
-    }),
-  });
+  if (Platform.OS != 'web') {
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: false,
+      }),
+    });
 
-  Notifications.setNotificationCategoryAsync('example', [
-    {
-      identifier: 'one',
-      buttonTitle: 'Button One',
-      options: {
-        isDestructive: true,
-        isAuthenticationRequired: false
-      }
-    },
-    {
-      identifier: 'two',
-      buttonTitle: 'Button Two',
-      options: {
-        isDestructive: true,
-        isAuthenticationRequired: true
-      }
-    },
-    {
-      identifier: 'three',
-      buttonTitle: 'Three',
-      textInput: { submitButtonTitle: 'Three', placeholder: 'Type Something' },
-    },
-  ])
-
+    Notifications.setNotificationCategoryAsync('example', [
+      {
+        identifier: 'one',
+        buttonTitle: 'Button One',
+        options: {
+          isDestructive: true,
+          isAuthenticationRequired: false
+        }
+      },
+      {
+        identifier: 'two',
+        buttonTitle: 'Button Two',
+        options: {
+          isDestructive: true,
+          isAuthenticationRequired: true
+        }
+      },
+      {
+        identifier: 'three',
+        buttonTitle: 'Three',
+        textInput: { submitButtonTitle: 'Three', placeholder: 'Type Something' },
+      },
+    ])
+  }
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
 

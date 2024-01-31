@@ -22,8 +22,8 @@ export const useUserStore = create<IUserStore>((set, get) => ({
     getUser: async (id) => {
         const value = await AsyncStorage.getItem('user')
         if (value !== null) {
-            const user = JSON.parse(value) as IUser
-            if (user.id == id) {
+            const user = JSON.parse(value) as IUser | null
+            if (user && user.id == id) {
                 get().setUser(user)
                 return
             }
