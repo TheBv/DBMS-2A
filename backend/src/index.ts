@@ -5,6 +5,8 @@ import Fastify from 'fastify';
 import { RouteParameters } from 'express-serve-static-core';
 import { arrayContains, arrayOverlaps, eq } from 'drizzle-orm';
 import cors from '@fastify/cors';
+import * as bcrypt from 'bcrypt';
+
 const fastify = Fastify();
 
 const queryClient = postgres("postgres://admin:password@0.0.0.0:5432/dbms");
@@ -39,8 +41,25 @@ fastify.get<{ Querystring: IUserParams }>('/users', (req, res) => {
 fastify.put<{ Body: typeof schema.users.$inferInsert }>('/users', (req, res) => {
     db.insert(schema.users).values({
         name: req.body.name,
-        categories: req.body.categories
+        categories: req.body.categories,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password!, 10),
+        token: req.body.token
     }).returning({ id: schema.users.id }).execute().then((result) => {
+        res.send(wrapResult(result))
+    }).catch((err) => {
+        res.status(500).send(err)
+    })
+})
+
+fastify.patch<{ Body: typeof schema.users.$inferInsert, Params: RouteParameters<'/users/:id'> }>('/users/:id', (req, res) => {
+    db.update(schema.users).set({
+        name: req.body.name,
+        categories: req.body.categories,
+        email: req.body.email,
+        password: req.body.password ? bcrypt.hashSync(req.body.password, 10) : undefined,
+        token: req.body.token
+    }).where(eq(schema.users.id, Number(req.params.id))).returning({ id: schema.users.id }).execute().then((result) => {
         res.send(wrapResult(result))
     }).catch((err) => {
         res.status(500).send(err)

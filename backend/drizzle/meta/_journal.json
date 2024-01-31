@@ -15,6 +15,13 @@
       "when": 1706634062020,
       "tag": "0001_busy_human_cannonball",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1706704533501,
+      "tag": "0002_curved_sprite",
+      "breakpoints": true
     }
   ]
 }

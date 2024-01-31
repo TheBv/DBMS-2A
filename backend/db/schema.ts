@@ -7,7 +7,10 @@ export const sportCategory = pgEnum('sport_category', ['soccer', 'basketball', '
 export const users = pgTable('users', {
     id: serial('id').primaryKey(),
     name: varchar('name', { length: 256 }),
+    email: varchar('email', { length: 256 }),
+    password: varchar('password', { length: 256 }),
     categories: sportCategory('categories').array(),
+    token: varchar('token', { length: 32 }),
   }, (users) => {
     return {
       nameIndex: uniqueIndex('name_idx').on(users.name),
