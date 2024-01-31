@@ -32,7 +32,7 @@ export function MultiSelect<T extends FieldValues>({ control, name, options }: M
   });
 
 
-  const selectables = options.filter(framework => !field.value?.includes(framework.value));
+  const selectables = options.filter(option => !field.value?.includes(option.value));
 
   return (
     <Command className="overflow-visible bg-transparent">
@@ -40,17 +40,17 @@ export function MultiSelect<T extends FieldValues>({ control, name, options }: M
         className="group border border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
       >
         <div className="flex gap-1 flex-wrap">
-          {field.value?.map((framework: string) => {
+          {field.value?.map((selectedValue: string) => {
             return (
-              <Badge key={framework} variant="secondary">
-                {framework}
+              <Badge key={selectedValue} variant="secondary">
+                {selectedValue}
                 <button
                   className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   onMouseDown={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                   }}
-                  onClick={() => field.onChange(field.value?.filter((value: string) => value !== framework))}
+                  onClick={() => field.onChange(field.value?.filter((value: string) => value !== selectedValue))}
                 >
                   <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
                 </button>
@@ -64,7 +64,7 @@ export function MultiSelect<T extends FieldValues>({ control, name, options }: M
             onValueChange={setInputValue}
             onBlur={() => setOpen(false)}
             onFocus={() => setOpen(true)}
-            placeholder="Select frameworks..."
+            placeholder="Select..."
             className="ml-2 bg-transparent outline-none placeholder:text-muted-foreground flex-1"
           />
         </div>
@@ -73,10 +73,10 @@ export function MultiSelect<T extends FieldValues>({ control, name, options }: M
         {open && selectables.length > 0 ?
           <div className="absolute w-full z-10 top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
             <CommandGroup className="h-full overflow-auto">
-              {selectables.map((framework) => {
+              {selectables.map((option) => {
                 return (
                   <CommandItem
-                    key={framework.value}
+                    key={option.value}
                     onMouseDown={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
@@ -91,7 +91,7 @@ export function MultiSelect<T extends FieldValues>({ control, name, options }: M
                     }}
                     className={"cursor-pointer"}
                   >
-                    {framework.label}
+                    {option.label}
                   </CommandItem>
                 );
               })}
