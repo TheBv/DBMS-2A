@@ -1,18 +1,11 @@
 import React from 'react';
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Welcome from "./app/screens/Welcome";
-import QuizPage from "./app/screens/QuizPage";
-import Result from "./app/screens/Result";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Welcome from './app/screens/Welcome';
+import QuizPage from './app/screens/QuizPage';
+import Result from './app/screens/Result';
 import TapRatingScreen from './app/screens/TapRatingScreen';
 import PushController from './app/screens/PushController';
-import {
-  StartScreen,
-  LoginScreen,
-  RegisterScreen,
-  ResetPasswordScreen,
-  Dashboard,
-} from './app/login'
 import PushNotification from './app/screens/PushNotification'; // Import your component that sends the notification
 
 const Stack = createNativeStackNavigator();
@@ -38,13 +31,13 @@ export default function App() {
           name="Quiz"
           component={QuizPage}
           options={{
-            title: "Questions",
+            title: 'Questions',
             headerStyle: {
-              backgroundColor: "#fac782",
+              backgroundColor: '#fac782',
             },
-            headerTintColor: "#fff",
+            headerTintColor: '#fff',
             headerTitleStyle: {
-              fontWeight: "bold",
+              fontWeight: 'bold',
             },
           }}
         />

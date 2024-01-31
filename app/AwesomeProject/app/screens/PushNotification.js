@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button } from 'react-native';
-import usePushNotification from './app/hooks/usePushNotification';
+import usePushNotification from '../hooks/usePushNotification';
 
-const MyComponent = () => {
+const PushNotification = () => {
   const { sendNotification } = usePushNotification();
 
   const handleSendNotification = () => {
@@ -10,8 +10,8 @@ const MyComponent = () => {
   };
 
   return (
-    <Button title="Benachrichtigung senden" onPress={handleSendNotification} />
+    <Button title="Send Notification" onPress={handleSendNotification} />
   );
 };
 
-export default MyComponent;
+export default PushNotification;
