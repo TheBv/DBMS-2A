@@ -5,7 +5,6 @@ import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 import { useUserStore } from './zustand/useUserStore';
 
-
 export const usePushToken = () => {
   const { token, setToken } = useUserStore();
   const [notification, setNotification] = useState<Notifications.Notification | undefined>();
@@ -31,7 +30,6 @@ export const usePushToken = () => {
       trigger: { seconds: 2 },
     });
   }
-
   async function registerForPushNotificationsAsync() {
     let token;
 

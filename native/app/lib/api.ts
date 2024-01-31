@@ -1,4 +1,7 @@
-import * as schema from './../../../../backend/db/schema'
+import Constants from 'expo-constants'
+import * as schema from './../../../backend/db/schema'
+
+export const URL = "http://" + Constants.expoConfig.hostUri.split(":").shift().concat(":3000")
 
 export interface IPutResponse {
     result: [{
@@ -28,7 +31,7 @@ export const getQuestions = async (params?: Partial<IQuestionParams>): Promise<I
     if (params?.time_end)
         url.append("time_end", params.time_end)
 
-    const result = await fetch("http://localhost:3000/questions?" + url.toString())
+    const result = await fetch(`${URL}/questions?` + url.toString())
         .catch((err) => {
             console.log(err)
         })
@@ -38,7 +41,7 @@ export const getQuestions = async (params?: Partial<IQuestionParams>): Promise<I
 }
 
 export const getQuestion = async (id: number): Promise<IQuestion> => {
-    const result = await fetch("http://localhost:3000/question/" + id)
+    const result = await fetch(`${URL}/question/` + id)
         .catch((err) => {
             console.log(err)
         })
@@ -48,7 +51,7 @@ export const getQuestion = async (id: number): Promise<IQuestion> => {
 }
 
 export const putQuestion = async (question: Omit<IQuestion, "id">): Promise<IPutResponse> => {
-    const result = await fetch("http://localhost:3000/questions", {
+    const result = await fetch(`${URL}/questions`, {
         method: "PUT",
         body: JSON.stringify(question),
         headers: {
@@ -63,7 +66,7 @@ export const putQuestion = async (question: Omit<IQuestion, "id">): Promise<IPut
 }
 
 export const deleteQuestion = async (id: number): Promise<IPutResponse> => {
-    const result = await fetch("http://localhost:3000/questions/" + id, {
+    const result = await fetch(`${URL}/questions/` + id, {
         method: "DELETE"
     }).catch((err) => {
             console.log(err)
@@ -87,7 +90,7 @@ export const getUsers = async (params?: Partial<IUserParams>): Promise<IUser[]> 
     if (params?.categories)
         url.append("categories", params.categories.join(","))
 
-    const result = await fetch("http://localhost:3000/users?" + url.toString())
+    const result = await fetch(`${URL}/users?` + url.toString())
         .catch((err) => {
             console.log(err)
         })
@@ -97,8 +100,9 @@ export const getUsers = async (params?: Partial<IUserParams>): Promise<IUser[]> 
 }
 
 export const getUser = async (id: number): Promise<IUser> => {
-    const result = await fetch("http://localhost:3000/user/" + id)
+    const result = await fetch(`${URL}/users/` + id)
         .catch((err) => {
+            console.log(URL)
             console.log(err)
         })
     if (!result)
@@ -107,7 +111,7 @@ export const getUser = async (id: number): Promise<IUser> => {
 }
 
 export const putUser = async (user: Omit<IUser, "id">): Promise<IPutResponse> => {
-    const result = await fetch("http://localhost:3000/users", {
+    const result = await fetch(`${URL}/users`, {
         method: "PUT",
         body: JSON.stringify(user),
         headers: {
@@ -122,7 +126,7 @@ export const putUser = async (user: Omit<IUser, "id">): Promise<IPutResponse> =>
 }
 
 export const patchUser = async (id: number, user: Partial<Omit<IUser, "id">>): Promise<IPutResponse> => {
-    const result = await fetch("http://localhost:3000/users/" + id, {
+    const result = await fetch(`${URL}/users/` + id, {
         method: "PATCH",
         body: JSON.stringify(user),
         headers: {
@@ -137,7 +141,7 @@ export const patchUser = async (id: number, user: Partial<Omit<IUser, "id">>): P
 }
 
 export const deleteUser = async (id: number): Promise<IPutResponse> => {
-    const result = await fetch("http://localhost:3000/users/" + id, {
+    const result = await fetch(`${URL}/users/` + id, {
         method: "DELETE"
     }).catch((err) => {
             console.log(err)
@@ -164,7 +168,7 @@ export const getAnswers = async (params?: Partial<IAnswerParams>): Promise<IAnsw
     if (params?.answer)
         url.append("answer", params.answer)
 
-    const result = await fetch("http://localhost:3000/answers?" + url.toString())
+    const result = await fetch(`${URL}/answers?` + url.toString())
         .catch((err) => {
             console.log(err)
         })
@@ -174,7 +178,7 @@ export const getAnswers = async (params?: Partial<IAnswerParams>): Promise<IAnsw
 }
 
 export const getAnswer = async (id: number): Promise<IAnswer> => {
-    const result = await fetch("http://localhost:3000/answer/" + id)
+    const result = await fetch(`${URL}/answer/` + id)
         .catch((err) => {
             console.log(err)
         })
@@ -184,7 +188,7 @@ export const getAnswer = async (id: number): Promise<IAnswer> => {
 }
 
 export const putAnswer = async (answer: Omit<IAnswer, "id">): Promise<IPutResponse> => {
-    const result = await fetch("http://localhost:3000/answers", {
+    const result = await fetch(`${URL}/answers`, {
         method: "PUT",
         body: JSON.stringify(answer),
         headers: {
@@ -199,7 +203,7 @@ export const putAnswer = async (answer: Omit<IAnswer, "id">): Promise<IPutRespon
 }
 
 export const deleteAnswer = async (id: number): Promise<IPutResponse> => {
-    const result = await fetch("http://localhost:3000/answers/" + id, {
+    const result = await fetch(`${URL}/answers/` + id, {
         method: "DELETE"
     }).catch((err) => {
             console.log(err)
