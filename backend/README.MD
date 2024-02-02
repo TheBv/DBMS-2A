@@ -6,9 +6,14 @@ Initially run
 npm install
 ```
 to install all the required packages.
+## Requirements
+
+The backend requires you to have access to a postgres database.
+
 ## Database
 
 This project uses Drizzle to manage the database and migrations
+
 
 ### Configuration
 
@@ -35,4 +40,4 @@ this command will build the typescript project and start run a node.js instance
 
 ## IMPORTANT
 This backend currently doesn't have any sort of authentication built in.
-ANYONE can DELETE/CREATE/POST ANYTHING
+**ANYONE** can DELETE/CREATE/POST ANYTHING
