@@ -6,15 +6,15 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 // I don't think this is necessairily a good idea...
-import * as schema from './../../../backend/db/schema'
+//import * as schema from './../../../backend/db/schema'
 import { useForm } from "react-hook-form"
 import { DateTimePicker } from "@/components/ui/time/date-time-picker"
 import { IQuestion, deleteQuestion, postPushQuestion, putQuestion } from "@/lib/api"
 import { useQuestions } from "@/hooks/useQuestions"
 import { MultiSelect } from "@/components/ui/multi-select"
 
-const categories = schema.evalCategory.enumValues
-const sportCategories = schema.sportCategory.enumValues
+const categories = ["physiology", "psychology", "training", "performance", "social", "cognition"]//schema.evalCategory.enumValues
+const sportCategories = ["soccer", "basketball", "tennis", "volleyball", "handball", "rugby", "hockey", "baseball", "american_football", "badminton", "table_tennis"] //schema.sportCategory.enumValues
 
 export default function Dashboard() {
   const { questions, get: getQuestions } = useQuestions()

@@ -1,3 +1,4 @@
+// This is fine because we're only accessing the types but still not a good idea
 import * as schema from './../../../backend/db/schema'
 
 const URL = "http://localhost:3000"
