@@ -8,11 +8,13 @@ import Fastify from 'fastify';
 import postgres from 'postgres';
 import * as schema from './../db/schema';
 import { jobs, scheduleJobs } from './scheduler';
+import pgSchema from './../drizzle.config';
 
 let expo = new Expo();
 const fastify = Fastify();
 
-const queryClient = postgres("postgres://admin:password@0.0.0.0:5432/dbms");
+const cred = pgSchema.dbCredentials
+const queryClient = postgres(`postgres://${cred.user}:${cred.password}@${cred.host}/${cred.database}`);
 export const db = drizzle(queryClient, { schema });
 
 
@@ -189,6 +191,18 @@ fastify.put<{ Body: IAnswerBody }>('/answers', (req, res) => {
         answer: req.body.answer,
         timestamp: new Date(req.body.timestamp)
     }).returning({ id: schema.answers.id }).execute().then((result) => {
+        res.send(wrapResult(result))
+    }).catch((err) => {
+        res.status(500).send(err)
+    })
+})
+
+fastify.patch<{ Body: Omit<IAnswerBody, "question_id">, Params: RouteParameters<'/answers/:id'> }>('/answers/:id', (req, res) => {
+    db.update(schema.answers).set({
+        user_id: req.body.user_id,
+        answer: req.body.answer,
+        timestamp: new Date(req.body.timestamp)
+    }).where(eq(schema.answers.id, Number(req.params.id))).returning({ id: schema.answers.id }).execute().then((result) => {
         res.send(wrapResult(result))
     }).catch((err) => {
         res.status(500).send(err)
