@@ -211,6 +211,21 @@ export const putAnswer = async (answer: Omit<IAnswerBody, "id">): Promise<IPutRe
     return (await result.json()).result
 }
 
+export const patchAnswer = async (id: number, answer: Partial<Omit<IAnswerBody, "id" | "question_id">>): Promise<IPutResponse> => {
+    const result = await fetch(`${URL}/answers/` + id, {
+        method: "PATCH",
+        body: JSON.stringify(answer),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).catch((err) => {
+            console.log(err)
+        })
+    if (!result)
+        return null
+    return (await result.json()).result
+}
+
 export const deleteAnswer = async (id: number): Promise<IPutResponse> => {
     const result = await fetch(`${URL}/answers/` + id, {
         method: "DELETE"

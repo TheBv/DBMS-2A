@@ -11,7 +11,7 @@ import {
 import { AirbnbRating } from "react-native-ratings";
 import Card from "./Card";
 
-const TapRatingScreen = ({ rating, onRatingChange }) => {
+const TapRatingScreen = ({ rating, onRatingChange, questionId }) => {
   const ratingCompleted = (newRating) => {
     onRatingChange(newRating); // Update the rating value state when rating changes
   };

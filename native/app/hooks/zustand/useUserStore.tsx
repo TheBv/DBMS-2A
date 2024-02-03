@@ -9,6 +9,7 @@ export interface IUserStore {
     setToken: (token: ExpoPushToken | null) => void;
     setUser: (user: IUser | null) => Promise<void>;
     getUser: (id: number) => Promise<IUser>;
+    getStoredUser: () => Promise<IUser | null>;
 }
 
 export const useUserStore = create<IUserStore>((set, get) => ({
@@ -18,6 +19,15 @@ export const useUserStore = create<IUserStore>((set, get) => ({
     setUser: async (user) => {
         await AsyncStorage.setItem('user', JSON.stringify(user))
         set({ user })
+    },
+    getStoredUser: async () => {
+        const value = await AsyncStorage.getItem('user')
+        if (value !== null) {
+            const user = JSON.parse(value) as IUser | null
+            set({ user })
+            return user
+        }
+        return null
     },
     getUser: async (id) => {
         const value = await AsyncStorage.getItem('user')
@@ -32,5 +42,5 @@ export const useUserStore = create<IUserStore>((set, get) => ({
         const user = await getUser(id)
         get().setUser(user)
         return user
-    }
+    },
 }));

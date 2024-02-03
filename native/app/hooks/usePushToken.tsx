@@ -6,6 +6,7 @@ import Constants from 'expo-constants';
 import { useUserStore } from './zustand/useUserStore';
 import { getUsers, putAnswer } from '../lib/api';
 import { getInnerToken } from '../lib/util';
+import { useNavigation } from '@react-navigation/native';
 
 export const usePushToken = () => {
   const { user, token, setToken, getUser } = useUserStore();
@@ -23,42 +24,26 @@ export const usePushToken = () => {
     Notifications.setNotificationCategoryAsync('question', [
       {
         identifier: '1',
-        buttonTitle: '1',
+        buttonTitle: 'Poor',
         options: {
           isDestructive: true,
           isAuthenticationRequired: false
         }
       },
       {
-        identifier: '2',
-        buttonTitle: '2',
-        options: {
-          isDestructive: true,
-          isAuthenticationRequired: true
-        }
-      },
-      {
         identifier: '3',
-        buttonTitle: '3',
+        buttonTitle: 'Acceptable',
         options: {
           isDestructive: true,
-          isAuthenticationRequired: true
-        }
-      },
-      {
-        identifier: '4',
-        buttonTitle: '4',
-        options: {
-          isDestructive: true,
-          isAuthenticationRequired: true
+          isAuthenticationRequired: false
         }
       },
       {
         identifier: '5',
-        buttonTitle: '5',
+        buttonTitle: 'Excellent',
         options: {
           isDestructive: true,
-          isAuthenticationRequired: true
+          isAuthenticationRequired: false
         }
       }
     ])
@@ -70,14 +55,15 @@ export const usePushToken = () => {
   async function schedulePushNotification() {
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: "You've got mail! 📬",
-        body: 'Here is the notification body',
+        title: "Example notification",
+        body: 'Here is an example notification',
         data: { data: 'goes here' },
         categoryIdentifier: 'question'
       },
-      trigger: { seconds: 2 },
+      trigger: { seconds: 1 },
     });
   }
+
   async function registerForPushNotificationsAsync() {
     let token;
 
@@ -111,6 +97,8 @@ export const usePushToken = () => {
     return token;
   }
 
+  const navigate = useNavigation();
+
   useEffect(() => {
     // Ideally we would only register them once but oh well
     if (notificationListener.current) Notifications.removeNotificationSubscription(notificationListener.current)
@@ -120,16 +108,23 @@ export const usePushToken = () => {
     });
     responseListener.current = Notifications.addNotificationResponseReceivedListener(notificationResponse => {
       // FIXME: This can be done way better
+      // Default action identifeir
+      if (notificationResponse.actionIdentifier == Notifications.DEFAULT_ACTION_IDENTIFIER) {
+        // Naviagte to the question screen
+        navigate.navigate("Quiz", { index: notificationResponse.notification.request.content.data.question_id })
+        return
+      }
+
       getUsers({ token: getInnerToken(token) }).then((users) => {
         if (users.length != 0)
           getUser(users[0].id).then((user) => {
             putAnswer({ user_id: user.id, question_id: notificationResponse.notification.request.content.data.question_id, answer: notificationResponse.actionIdentifier, timestamp: new Date().getTime() }).then((response) => {
+              if (!response)
+                navigate.navigate("Quiz", { index: notificationResponse.notification.request.content.data.question_id })
               Notifications.dismissNotificationAsync(notificationResponse.notification.request.identifier)
             })
           })
       })
-      // Close notification
-
     });
   }, []);
 

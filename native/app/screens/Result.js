@@ -5,7 +5,7 @@ const Result = ({ navigation, route }) => {
     <View style={styles.container}>
       <View style={styles.subContainer}>
         <Image style={styles.image} source={require("../../assets/faultier_soccer.png")} />
-        <Text style={styles.innerText}>Thank you for your informations.</Text>
+        <Text style={styles.innerText}>Thank you for your information.</Text>
         <Text style={styles.innerText}>Keep up with the work!</Text>
         {/* Retry Quiz button */}
         <TouchableOpacity
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     },
     innerText: {
       color: 'white',
-      fontSize: 50,
+      fontSize: 30,
     },
 });
 

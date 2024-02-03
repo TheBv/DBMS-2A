@@ -51,7 +51,6 @@ export default function LoginScreen({ navigation }) {
         getUser(users[0].id)
     })
   },[token])
-  if (token)
 
 
   return (
