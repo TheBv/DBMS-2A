@@ -6,9 +6,9 @@ exports.default = {
     out: './drizzle',
     driver: 'pg', // | 'mysql2' | 'better-sqlite' | 'libsql' | 'turso'
     dbCredentials: {
-        host: "127.0.0.1",
-        user: "admin",
-        password: "password",
-        database: "dbms",
+        host: process.env.HOST || "127.0.0.1",
+        user: process.env.USER || "admin",
+        password: process.env.PASSOWRD || "password",
+        database: process.env.DATABASE || "dbms",
     },
 };

@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node build/src/index.js"
+    "start": "npm run build && node build/src/index.js",
+    "docker": "npx drizzle-kit push:pg && npm run start"
   },
   "repository": {
     "type": "git",

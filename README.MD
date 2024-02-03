@@ -21,6 +21,11 @@ The `dashboard` uses react alongside vite and leverages components from shadcn.
 
 The react `native` mobile app is built with react-native alongside expo to handle push notifications. 
 
+## Docker
+You can alternatively start the entire backend with the provided docker-compose file.
+**NOTE** Please make sure the backend is properly exposed to your local network.
+If it's not your mobile app won't be able to communicate with it at all.
+
 ---
 This project was part of a course at the Goethe University Frankfurt and was developed by
 Patrick Schrottenbacher and Amina Felic

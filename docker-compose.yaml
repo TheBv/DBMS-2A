@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: dbms
+    container_name: dbms_db
+    networks:
+      - dbms_network
+  backend:
+    environment:
+      HOST: dbms_db
+      USER: admin
+      PASSWORD: password
+      DATABSE: dbms
+    build:
+      context: ./backend
+    container_name: dbms_backend
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    networks:
+      - dbms_network
+  dashboard:
+    build: 
+      context: ./dashboard
+    container_name: dbms_dashboard
+    networks:
+      - dbms_network
+    ports:
+      - 5173:5173
+networks:
+  dbms_network:
+    internal: false
+
