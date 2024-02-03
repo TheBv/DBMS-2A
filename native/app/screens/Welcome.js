@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,10 +9,25 @@ import {
 } from "react-native";
 import Button from '../components/Button'
 import { useUserStore } from "../hooks/zustand/useUserStore";
+import { usePushToken } from "../hooks/usePushToken";
+import { getUsers } from '../lib/api'
+import { getInnerToken } from '../lib/util'
 
 const Welcome = ({ navigation }) => {
   const [fadeAnim, setFadeAnim] = useState(new Animated.Value(1));
   const [progress, setProgress] = useState(new Animated.Value(0));
+  const {getUser} = useUserStore();
+  const { token} = usePushToken();
+  
+  // Crumy way to make sure we properly have set our current user
+  useEffect(()=> {
+    if (!token)
+      return
+    getUsers({token: getInnerToken(token)}).then((users)=> {
+      if (users.length != 0)
+        getUser(users[0].id)
+    })
+  },[token])
 
   const { setUser } = useUserStore()
 
